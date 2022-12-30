@@ -1,39 +1,5 @@
-from piece_class import ChessPiece
-
-
-def start_game(board):
-    mapped_board = []
-    for row in board:
-        mapped_row = []
-        for square in row:
-            if square != 0:
-                type = square.split("_")[0]
-                color = 0 if square.split("_")[1] == "w" else 1
-                mapped_row.append(ChessPiece(type, color))
-            else:
-                mapped_row.append(0)
-        mapped_board.append(mapped_row)
-
-    return mapped_board
-
-
-def draw_board(board):
-    board_str = " "+"_"*31+"\n"
-    for row_idx, row in enumerate(board):
-        row_str = "|"
-        for square in row:
-            if square != 0:
-                row_str += "_" + square.draw()
-            else:
-                row_str += "__"
-            row_str += "_|"
-
-        board_str += row_str + f" {row_idx+1}\n"
-
-    for letter_ord in range(97, 97+8):
-        board_str += f"  {chr(letter_ord)} "
-    return board_str
-
+from functions import start_game, draw_board, make_a_move, check_input
+import os
 
 game_board = [["rook_b", "knight_b", "bishop_b", "queen_b", "king_b", "bishop_b", "knight_b", "rook_b"],
               ["pawn_b", "pawn_b", "pawn_b", "pawn_b", "pawn_b", "pawn_b", "pawn_b", "pawn_b"],
@@ -48,6 +14,14 @@ game_board = [["rook_b", "knight_b", "bishop_b", "queen_b", "king_b", "bishop_b"
 def play_chess():
     board = start_game(game_board)
     print(draw_board(board))
+    while True:
+        move = input("Your move(eg. d2 d4): ")
+        if check_input(move):
+            board, message = make_a_move(*move.split(), board)
+        else:
+            message = "Invalid input!"
+        print(draw_board(board))
+        print(message)
 
 
 play_chess()

@@ -3,7 +3,7 @@ import itertools
 
 class ChessPiece:
 
-    def __init__(self, type, color):
+    def __init__(self, type, color, place):
         # possible places to move to (all_x, all_y) in a relative coordinate system; 0 – current place
         possible_moves = {"king": [[p[0] for p in itertools.product([-1, 0, 1], repeat=2)],
                                    [p[1] for p in itertools.product([-1, 0, 1], repeat=2)]],
@@ -20,11 +20,16 @@ class ChessPiece:
 
         self.color = color
         self.type = type
+        self.place = place
         self.movements = possible_moves[type]
 
-    def move(self, board, move):
-        pass
-        # return new_board
+    def move(self, board, new_place):
+        new_board = board[:]
+
+        new_board[self.place[0]][self.place[1]] = 0
+        new_board[new_place[0]][new_place[1]] = ChessPiece(self.type, self.color, new_place)
+
+        return new_board
 
     def draw(self):
         type2string = {"king_0": "♔",
