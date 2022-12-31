@@ -1,4 +1,4 @@
-from piece_class import ChessPiece
+from piece_class import ChessPiece, get_square
 
 
 def start_game(board):
@@ -9,7 +9,7 @@ def start_game(board):
             if square != 0:
                 type = square.split("_")[0]
                 color = 0 if square.split("_")[1] == "w" else 1
-                mapped_row.append(ChessPiece(type, color, (idx_row, idx_column)))
+                mapped_row.append(ChessPiece(type, color, (idx_column, 7-idx_row)))
             else:
                 mapped_row.append(0)
         mapped_board.append(mapped_row)
@@ -52,24 +52,24 @@ def check_input(input_):
 
 
 def make_a_move(origin, move, board, current_color):
-    origin_place = (8 - int(origin[1]), abs(97 - ord(origin[0])))
-    new_place = (8 - int(move[1]), abs(97 - ord(move[0])))
+    origin_place = (abs(97 - ord(origin[0])), int(origin[1])-1)
+    new_place = (abs(97 - ord(move[0])), int(move[1])-1)
 
-    if board[origin_place[0]][origin_place[1]] == 0:
+    if get_square(board, origin_place) == 0:
         return board, "Blank square selected!", current_color
 
-    if board[origin_place[0]][origin_place[1]].color != current_color:
+    if get_square(board, origin_place).color != current_color:
         return board, "You can only move your pieces!", current_color
 
-    valid_move, message = board[origin_place[0]][origin_place[1]].check_valid_move(board, new_place)
+    valid_move, message = get_square(board, origin_place).check_valid_move(board, new_place)
     if not valid_move:
         return board, message, current_color
 
-    board = board[origin_place[0]][origin_place[1]].move(board, new_place)
+    board = get_square(board, origin_place).move(board, new_place)
 
     c_n = "White" if current_color == 1 else "Black"
     c_c = "White" if current_color == 0 else "Black"
     current_color = (current_color + 1) % 2
 
-    return board, f"{c_c} moved their {origin} {board[new_place[0]][new_place[1]].type} " \
+    return board, f"{c_c} moved their {origin} {get_square(board, new_place).type} " \
                   f"to {move}\n{c_n}'s turn!", current_color
