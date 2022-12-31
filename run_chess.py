@@ -11,7 +11,7 @@ game_board = [[f"rook_b", f"knight_b", f"bishop_b", f"queen_b", f"king_b", f"bis
 
 
 # TODO: win conditions
-# TODO: ban moves which threatens the king on the next move
+# TODO: ban moves which threaten the king on the next move
 
 
 def play_chess():
