@@ -38,6 +38,8 @@ def draw_board(board):
 def check_input(input_):
     if len(input_.split()) != 2:
         return False
+    if len(input_.split()[0]) != 2 or len(input_.split()[1]) != 2:
+        return False
 
     origin, move = input_.split()[0], input_.split()[1]
 
@@ -49,12 +51,25 @@ def check_input(input_):
     return True
 
 
-def make_a_move(origin, move, board):
+def make_a_move(origin, move, board, current_color):
     origin_place = (8 - int(origin[1]), abs(97 - ord(origin[0])))
     new_place = (8 - int(move[1]), abs(97 - ord(move[0])))
 
     if board[origin_place[0]][origin_place[1]] == 0:
-        return board, "Blank square selected!"
+        return board, "Blank square selected!", current_color
+
+    if board[origin_place[0]][origin_place[1]].color != current_color:
+        return board, "You can only move your pieces!", current_color
+
+    valid_move, message = board[origin_place[0]][origin_place[1]].check_valid_move(board, new_place)
+    if not valid_move:
+        return board, message, current_color
 
     board = board[origin_place[0]][origin_place[1]].move(board, new_place)
-    return board, f"You moved your {origin} {board[new_place[0]][new_place[1]].type} to {move}"
+
+    c_n = "White" if current_color == 1 else "Black"
+    c_c = "White" if current_color == 0 else "Black"
+    current_color = (current_color + 1) % 2
+
+    return board, f"{c_c} moved their {origin} {board[new_place[0]][new_place[1]].type} " \
+                  f"to {move}\n{c_n}'s turn!", current_color

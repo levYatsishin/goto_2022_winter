@@ -1,8 +1,7 @@
 from functions import start_game, draw_board, make_a_move, check_input
-import os
 
-game_board = [["rook_b", "knight_b", "bishop_b", "queen_b", "king_b", "bishop_b", "knight_b", "rook_b"],
-              ["pawn_b", "pawn_b", "pawn_b", "pawn_b", "pawn_b", "pawn_b", "pawn_b", "pawn_b"],
+game_board = [[f"rook_b", f"knight_b", f"bishop_b", f"queen_b", f"king_b", f"bishop_b", f"knight_b", f"rook_b"],
+              [f"pawn_b", f"pawn_b", f"pawn_b", f"pawn_b", f"pawn_b", f"pawn_b", f"pawn_b", f"pawn_b"],
               [0, 0, 0, 0, 0, 0, 0, 0, ],
               [0, 0, 0, 0, 0, 0, 0, 0, ],
               [0, 0, 0, 0, 0, 0, 0, 0, ],
@@ -10,16 +9,27 @@ game_board = [["rook_b", "knight_b", "bishop_b", "queen_b", "king_b", "bishop_b"
               ["pawn_w", "pawn_w", "pawn_w", "pawn_w", "pawn_w", "pawn_w", "pawn_w", "pawn_w"],
               ["rook_w", "knight_w", "bishop_w", "queen_w", "king_w", "bishop_w", "knight_w", "rook_w"]]
 
+# TODO: 2 players game
+# TODO:     - move only your pieces
+# TODO:     - rotate the table? (f"knight_{COLOR}")
+# TODO: move restrictions
+
 
 def play_chess():
+    current_color = 0
+
     board = start_game(game_board)
     print(draw_board(board))
+    print("White's turn!")
     while True:
-        move = input("Your move(eg. d2 d4): ")
+        move = input(f"Make your move(eg. e2 e4): ")
+
         if check_input(move):
-            board, message = make_a_move(*move.split(), board)
+            board, message, current_color = make_a_move(*move.split(), board, current_color)
+            print(current_color)
         else:
             message = "Invalid input!"
+
         print(draw_board(board))
         print(message)
 

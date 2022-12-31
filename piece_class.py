@@ -23,6 +23,22 @@ class ChessPiece:
         self.place = place
         self.movements = possible_moves[type]
 
+    def check_valid_move(self, board, new_place):
+        change = (self.place[1] - new_place[1], self.place[0] - new_place[0])
+        print(change)
+
+        if self.type == "pawn":
+            if self.color == 0 and change == (0, 1):
+                return True, ""
+            if self.color == 1 and change == (0, -1):
+                return True, ""
+
+        for possible_move in zip(self.movements[0], self.movements[1]):
+            if change == possible_move:
+                return True, ""
+
+        return False, "This piece can't move this way!"
+
     def move(self, board, new_place):
         new_board = board[:]
 
