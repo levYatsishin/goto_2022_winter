@@ -7,8 +7,6 @@ class ChessPiece:
         # possible places to move to (all_x, all_y) in a relative coordinate system; 0 – current place
         possible_moves = {"king": [[p[0] for p in itertools.product([-1, 0, 1], repeat=2)],
                                    [p[1] for p in itertools.product([-1, 0, 1], repeat=2)]],
-                          "queen": ([x for x in range(-7, 8)] + [x for x in range(-7, 8)] + [0 for _ in range(15)],
-                                    [x for x in range(-7, 8)] + [0 for _ in range(15)] + [x for x in range(-7, 8)]),
                           "rook": ([0 for _ in range(15)] + [x for x in range(-7, 8)],
                                    [x for x in range(-7, 8)] + [0 for _ in range(15)]),
                           "bishop": ([x for x in range(-7, 8)]+[x for x in range(8, -7, -1)]+[x for x in range(-8, 7)],
@@ -17,6 +15,8 @@ class ChessPiece:
                                      list(itertools.chain.from_iterable(
                                          [[x, -x] for x in [1, 2, 0]] + [[x, -x] for x in [2, 1]]))),
                           "pawn": ([0], [1])}
+        possible_moves["queen"] = [possible_moves["rook"][0]+possible_moves["bishop"][0],
+                                   possible_moves["rook"][1]+possible_moves["bishop"][1]]
 
         self.color = color
         self.type = type
@@ -27,7 +27,6 @@ class ChessPiece:
     def check_valid_move(self, board, new_place):
         valid, message = False, "This piece cant move this way!"
         c = 0
-        print(self.place, new_place)
         change = (new_place[0] - self.place[0], new_place[1] - self.place[1])
 
         if self.type == "pawn":
@@ -55,8 +54,7 @@ class ChessPiece:
             if change[1] == 0:
                 step = 1 if change[0] < 0 else -1
                 for x in range(change[0]+step, 0, step):
-                    checking_place = [self.place[0]+x, self.place[1]]
-                    print(change, checking_place)
+                    checking_place = [self.place[0]+x*step, self.place[1]]
 
                     if get_square(board, checking_place):
                         valid, message = False, "You can't move this way, the passage is blocked."
@@ -65,8 +63,7 @@ class ChessPiece:
             elif change[0] == 0:
                 step = 1 if change[1] < 0 else -1
                 for x in range(change[1]+step, 0, step):
-                    checking_place = [self.place[0], self.place[1]+x]
-                    print(change, checking_place)
+                    checking_place = [self.place[0], self.place[1]+x*step]
 
                     if get_square(board, checking_place):
                         valid, message = False, "You can't move this way, the passage is blocked."
@@ -74,14 +71,13 @@ class ChessPiece:
             # blocks on diagonals
             else:
                 step_x = 1 if change[0] < 0 else -1
-                step_y = 1 if change[1] < 0 else -1
-                for x in range(change[0]+step_x, 0, step_x):
-                    for y in range(change[1] + step_y, 0, step_y):
-                        checking_place = [self.place[0]+x, self.place[1]+y]
-                        print(change, checking_place)
-
-                        if get_square(board, checking_place):
-                            valid, message = False, "You can't move this way, the passage is blocked."
+                step_y = 1 if change[0] < 0 else -1
+                for x, y in zip([x for x in range(change[0]+step_x, 0, step_x)],
+                                [x for x in range(change[1]+step_y, 0, step_y)]):
+                    checking_place = [self.place[0]+x, self.place[1]+y]
+                    print(checking_place)
+                    if get_square(board, checking_place):
+                        valid, message = False, "You can't move this way, the passage is blocked."
 
         return valid, message
 
@@ -94,18 +90,18 @@ class ChessPiece:
         return new_board
 
     def draw(self):
-        type2string = {"king_0": "♔",
-                       "queen_0": "♕",
-                       "rook_0": "♖",
-                       "bishop_0": "♗",
-                       "knight_0": "♘",
-                       "pawn_0": "♙",
-                       "king_1": "♚",
-                       "queen_1": "♛",
-                       "rook_1": "♜",
-                       "bishop_1": "♝",
-                       "knight_1": "♞",
-                       "pawn_1": "♟",
+        type2string = {"king_1": "♔",
+                       "queen_1": "♕",
+                       "rook_1": "♖",
+                       "bishop_1": "♗",
+                       "knight_1": "♘",
+                       "pawn_1": "♙",
+                       "king_0": "♚",
+                       "queen_0": "♛",
+                       "rook_0": "♜",
+                       "bishop_0": "♝",
+                       "knight_0": "♞",
+                       "pawn_0": "♟",
                        }
         return type2string[f"{self.type}_{self.color}"]
 
