@@ -90,18 +90,18 @@ class ChessPiece:
         return new_board
 
     def draw(self):
-        type2string = {"king_1": "♔",
-                       "queen_1": "♕",
-                       "rook_1": "♖",
-                       "bishop_1": "♗",
-                       "knight_1": "♘",
-                       "pawn_1": "♙",
-                       "king_0": "♚",
-                       "queen_0": "♛",
-                       "rook_0": "♜",
-                       "bishop_0": "♝",
-                       "knight_0": "♞",
-                       "pawn_0": "♟",
+        type2string = {"king_0": "♔",
+                       "queen_0": "♕",
+                       "rook_0": "♖",
+                       "bishop_0": "♗",
+                       "knight_0": "♘",
+                       "pawn_0": "♙",
+                       "king_1": "♚",
+                       "queen_1": "♛",
+                       "rook_1": "♜",
+                       "bishop_1": "♝",
+                       "knight_1": "♞",
+                       "pawn_1": "♟",
                        }
         return type2string[f"{self.type}_{self.color}"]
 
