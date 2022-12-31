@@ -72,7 +72,6 @@ class ChessPiece:
                         valid, message = False, "You can't move this way, the passage is blocked."
 
             # blocks on diagonals
-            # TODO: implement
             else:
                 step_x = 1 if change[0] < 0 else -1
                 step_y = 1 if change[1] < 0 else -1

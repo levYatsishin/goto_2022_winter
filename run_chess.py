@@ -18,9 +18,7 @@ game_board = [[f"rook_b", f"knight_b", f"bishop_b", f"queen_b", f"king_b", f"bis
               ["pawn_w", "pawn_w", "pawn_w", "pawn_w", "pawn_w", "pawn_w", "pawn_w", "pawn_w"],
               ["rook_w", "knight_w", "bishop_w", 0, 0, "bishop_w", "knight_w", "rook_w"]]
 
-# TODO: move restrictions
 # TODO: win conditions
-
 
 def play_chess():
     # 0 - white; 1 - black
