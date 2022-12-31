@@ -9,9 +9,6 @@ game_board = [[f"rook_b", f"knight_b", f"bishop_b", f"queen_b", f"king_b", f"bis
               ["pawn_w", "pawn_w", "pawn_w", "pawn_w", "pawn_w", "pawn_w", "pawn_w", "pawn_w"],
               ["rook_w", "knight_w", "bishop_w", "queen_w", "king_w", "bishop_w", "knight_w", "rook_w"]]
 
-# TODO: 2 players game
-# TODO:     - move only your pieces
-# TODO:     - rotate the table? (f"knight_{COLOR}")
 # TODO: move restrictions
 
 
@@ -26,7 +23,6 @@ def play_chess():
 
         if check_input(move):
             board, message, current_color = make_a_move(*move.split(), board, current_color)
-            print(current_color)
         else:
             message = "Invalid input!"
 
