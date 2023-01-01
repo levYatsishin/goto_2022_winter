@@ -10,8 +10,10 @@ game_board = [[f"rook_b", f"knight_b", f"bishop_b", f"queen_b", f"king_b", f"bis
               ["rook_w", "knight_w", "bishop_w", "queen_w", "king_w", "bishop_w", "knight_w", "rook_w"]]
 
 
-# TODO: prohibit moves which threaten the king on the next move
+# TODO: Prohibit moves which threaten the king on the next move
+# TODO:    Stale mate
 # TODO: En passant
+
 
 def play_chess():
     # 0 - white; 1 - black
