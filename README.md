@@ -8,6 +8,7 @@ To run just open the terminal in a project folder and run `python3 run_chess.py`
 - [x] Drawing the board
 - [x] Input from user
   - [x] ~~Check for invalid input~~
+  - [x] ~~2 players game and related issues~~
 - [x] Win conditions
 - [ ] Prohibit moves which instantly threaten the king
 - [ ] Little features
