@@ -54,16 +54,17 @@ def check_input(input_):
 def make_a_move(origin, move, board, current_color):
     origin_place = (abs(97 - ord(origin[0])), int(origin[1])-1)
     new_place = (abs(97 - ord(move[0])), int(move[1])-1)
+    win = False
 
     if get_square(board, origin_place) == 0:
-        return board, "Blank square selected!", current_color
+        return board, "Blank square selected!", current_color, win
 
     if get_square(board, origin_place).color != current_color:
-        return board, "You can only move your pieces!", current_color
+        return board, "You can only move your pieces!", current_color, win
 
     valid_move, message = get_square(board, origin_place).check_valid_move(board, new_place)
     if not valid_move:
-        return board, message, current_color
+        return board, message, current_color, win
 
     board, win = get_square(board, origin_place).move(board, new_place)
     c_c = "White" if current_color == 0 else "Black"

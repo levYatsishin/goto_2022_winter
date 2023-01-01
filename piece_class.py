@@ -54,7 +54,7 @@ class ChessPiece:
             if change[1] == 0:
                 step = 1 if change[0] < 0 else -1
                 for x in range(change[0]+step, 0, step):
-                    checking_place = [self.place[0]+x*step, self.place[1]]
+                    checking_place = [self.place[0]+x*-step, self.place[1]]
 
                     if get_square(board, checking_place):
                         valid, message = False, "You can't move this way, the passage is blocked."
@@ -63,8 +63,8 @@ class ChessPiece:
             elif change[0] == 0:
                 step = 1 if change[1] < 0 else -1
                 for x in range(change[1]+step, 0, step):
-                    checking_place = [self.place[0], self.place[1]+x*step]
-
+                    checking_place = [self.place[0], self.place[1]+x*-step]
+                    print(self.place, new_place, change, checking_place)
                     if get_square(board, checking_place):
                         valid, message = False, "You can't move this way, the passage is blocked."
 
