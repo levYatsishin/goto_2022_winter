@@ -12,3 +12,4 @@ To run just open the terminal in a project folder and run `python3 run_chess.py`
 - [ ] Prohibit moves which instantly threaten the king
 - [ ] En passant
 - [ ] Stalemate
+- [ ] Implement propper testing
