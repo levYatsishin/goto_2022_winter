@@ -10,9 +10,8 @@ game_board = [[f"rook_b", f"knight_b", f"bishop_b", f"queen_b", f"king_b", f"bis
               ["rook_w", "knight_w", "bishop_w", "queen_w", "king_w", "bishop_w", "knight_w", "rook_w"]]
 
 
-# TODO: win conditions
-# TODO: ban moves which threatens the king on the next move
-
+# TODO: prohibit moves which threaten the king on the next move
+# TODO: En passant
 
 def play_chess():
     # 0 - white; 1 - black
@@ -22,13 +21,14 @@ def play_chess():
     c_c = "White" if current_color == 0 else "Black"
     print(draw_board(board))
     print(f"{c_c}'s turn!")
-    while True:
+
+    win = False
+    while not win:
         move = input(f"Make your move(eg. d2 d4): ")
         if check_input(move):
-            board, message, current_color = make_a_move(*move.split(), board, current_color)
+            board, message, current_color, win = make_a_move(*move.split(), board, current_color)
         else:
             message = "Invalid input!"
-
         print(draw_board(board))
         print(message)
 

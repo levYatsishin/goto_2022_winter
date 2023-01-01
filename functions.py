@@ -65,11 +65,15 @@ def make_a_move(origin, move, board, current_color):
     if not valid_move:
         return board, message, current_color
 
-    board = get_square(board, origin_place).move(board, new_place)
-
-    c_n = "White" if current_color == 1 else "Black"
+    board, win = get_square(board, origin_place).move(board, new_place)
     c_c = "White" if current_color == 0 else "Black"
-    current_color = (current_color + 1) % 2
 
-    return board, f"{c_c} moved their {origin} {get_square(board, new_place).type} " \
-                  f"to {move}\n{c_n}'s turn!", current_color
+    if win:
+        return board, f"{c_c} won the game! Congratulations!", current_color, win
+
+    else:
+        c_n = "White" if current_color == 1 else "Black"
+        current_color = (current_color + 1) % 2
+
+        return board, f"{c_c} moved their {origin} {get_square(board, new_place).type} " \
+                      f"to {move}\n{c_n}'s turn!", current_color, win

@@ -82,12 +82,16 @@ class ChessPiece:
         return valid, message
 
     def move(self, board, new_place):
+        win = False
         new_board = board[:]
+
+        if get_square(board, new_place) != 0 and get_square(board, new_place).type == "king":
+            win = True
 
         new_board[7-self.place[1]][self.place[0]] = 0
         new_board[7-new_place[1]][new_place[0]] = ChessPiece(self.type, self.color, new_place, False)
 
-        return new_board
+        return new_board, win
 
     def draw(self):
         type2string = {"king_0": "♔",
