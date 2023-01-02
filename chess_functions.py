@@ -76,5 +76,9 @@ def make_a_move(origin, move, board, current_color):
         c_n = "White" if current_color == 1 else "Black"
         current_color = (current_color + 1) % 2
 
-        return board, f"{c_c} moved their {origin} {get_square(board, new_place).type} " \
-                      f"to {move}\n{c_n}'s turn!", current_color, win
+        message = f"{c_c} moved their {origin} {get_square(board, new_place).type} to {move}"
+        real_time_game = True
+        if not real_time_game:
+            message += "\n{c_n}'s turn!"
+
+        return board, message, current_color, win
